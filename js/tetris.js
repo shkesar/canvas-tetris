@@ -4,6 +4,7 @@ var lose;
 var interval;
 var current; // current moving shape
 var currentX, currentY; // position of current shape
+var score;
 var shapes = [
     [ 1, 1, 1, 1 ],
     [ 1, 1, 1, 0,
@@ -55,6 +56,10 @@ function init() {
             board[ y ][ x ] = 0;
         }
     }
+}
+
+function setScore() {
+    document.getElementById( 'score' ).innerHTML = "Score: " + score
 }
 
 // keep the element moving down, creating new shapes and clearing lines
@@ -109,6 +114,8 @@ function clearLines() {
             }
         }
         if ( rowFilled ) {
+            score += 10;
+            setScore();
             document.getElementById( 'clearsound' ).play();
             for ( var yy = y; yy > 0; --yy ) {
                 for ( var x = 0; x < COLS; ++x ) {
@@ -175,6 +182,8 @@ function valid( offsetX, offsetY, newCurrent ) {
 }
 
 function newGame() {
+    score = 0;
+    setScore();
     clearInterval(interval);
     init();
     newShape();
